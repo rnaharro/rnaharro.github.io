@@ -19,6 +19,7 @@ var app = new Vue({
 	data: data,
 
 	created: function () {
+        this.getUserData();
 		this.getReposData();
 	},
 
@@ -82,6 +83,13 @@ var app = new Vue({
 			})
 			.error(function () {})
 			.always(function () {});
-		}
+		},
+
+        getUserData : function() {
+            atomic.get(githubAPI.user).success(function(d, x) {
+                console.log( d );
+            });
+        }
+
 	}
 });

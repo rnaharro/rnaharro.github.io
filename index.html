@@ -17,59 +17,56 @@
 	<meta name="google" content="notranslate" />
 	<!--[if IEMobile]><meta http-equiv="cleartype" content="on" /><![endif]-->
 
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" type="text/css" />
 	<link href="frontend/styles/app.css" rel="stylesheet" type="text/css" />
 </head>
 <body id="app">
 
-	<header>
-		<h1>{{ user }}</h1>
-		<ul>
-			<li>Stars : {{ stars }}</li>
-			<li>Forks : {{ forks }}</li>
-			<li>Watchers : {{ watching}}</li>
-		</ul>
+	<header role="banner">
+		<h1 v-text="user"></h1>
+		<p>
+			<i class="fa fa-star-o"></i> {{ stars }}
+			<i class="fa fa-code-fork"></i> {{ forks }}
+			<i class="fa fa-eye"></i> {{ watching }}
+		</p>
 
-		<h3>Languages</h3>
-		<ul>
-			<li v-for="user_lang in user_languages | orderBy true -1">
-				{{ $key }} : {{ user_lang }}
-			</li>
-		</ul>
+		<p>
+			<strong>Languages: </strong>
+			<template v-for="user_lang in user_languages">
+				<span>{{ $key }} ( <small>{{ user_lang }}</small> ) </span>
+			</template>
+		</p>
 		<hr />
 	</header>
 
-	<main>
+	<main role="main">
 		<h2>Repositories :</h2>
-		<template v-for="repo in repos">
-		<dl>
-			<dt>
-				<strong>{{ repo.name }}</strong>
-				{{ repo.html_url }}
-			</dt>
-			<dd>
-				<p>Description : <span v-html="repo.description | autolinks"></span></p>
-				<p>Homepage : {{ repo.homepage }}</p>
-				<p>Languages : <strong>{{ repo.main_language }}</strong> <small>( {{ repo.language }} )</small></p>
+
+		<section v-for="repo in repos">
+			<header>
+				<h3><a href="{{ repo.html_url }}" title="{{ repo.name }}" target="_blank">{{ repo.name }} <i class="fa fa-external-link"></i></a></h3>
+				<p v-text="repo.language"></p>
+			</header>
+			<article>
+				<p v-if="repo.description"><i class="fa fa-fw fa-align-left"></i> {{{ repo.description | autolinks }}}</p><p v-else><i class="fa fa-fw fa-align-left"></i> {{ repo.name }}</p>
+				<p v-if="repo.homepage"><i class="fa fa-fw fa-globe"></i> {{{ repo.homepage | autolinks }}}</p>
+			</article>
+			<footer>
 				<p>
-					Stars : {{ repo.stargazers_count }} &mdash;
-					Forks : {{ repo.forks_count }} &mdash;
-					Watchers : {{ repo.watchers_count }}
+					<i class="fa fa-clock-o"></i> {{ repo.pushed_at | filterdate }}
+					 &mdash;
+					<i class="fa fa-star-o"></i> {{ repo.stargazers_count }}
+					<i class="fa fa-code-fork"></i> {{ repo.forks_count }}
+					<i class="fa fa-eye"></i> {{ repo.watchers_count }}
 				</p>
-			</dd>
-			<dd>
-				<ul>
-					<li>Pushed : {{ repo.pushed_at | filterdate }}</li>
-					<li>Updated : {{ repo.updated_at | filterdate }}</li>
-					<li>Created : {{ repo.created_at | filterdate }}</li>
-				</ul>
-			</dd>
-		</dl>
-		<hr />
-		</template>
+			</footer>
+		</section>
+
 	</main>
 
-	<footer>
+	<footer role="contentinfo">
+		<hr />
 		<p>{{ user }} &copy; 2016</p>
 	</footer>
 
