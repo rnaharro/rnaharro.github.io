@@ -30,12 +30,9 @@
 			<i class="fa fa-code-fork"></i> {{ forks }}
 			<i class="fa fa-eye"></i> {{ watching }}
 		</p>
-
 		<p>
 			<strong>Languages: </strong>
-			<template v-for="user_lang in user_languages">
-				<span>{{ $key }} ( <small>{{ user_lang }}</small> ) </span>
-			</template>
+			<template v-for="user_lang in user_languages"><span>{{ $key }} ( <small>{{ user_lang }}</small> ) </span></template>
 		</p>
 		<hr />
 	</header>
@@ -72,6 +69,7 @@
 
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.17/vue.min.js"></script>
 	<script type="text/javascript" src="frontend/scripts/atomic.js"></script>
+	<script type="text/javascript" src="frontend/scripts/cache.js"></script>
 	<script type="text/javascript" src="frontend/scripts/app.js"></script>
 </body>
 </html>

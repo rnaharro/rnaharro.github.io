@@ -19,7 +19,7 @@ var app = new Vue({
 	data: data,
 
 	created: function () {
-        this.getUserData();
+        // this.getUserData();
 		this.getReposData();
 	},
 
@@ -35,7 +35,6 @@ var app = new Vue({
 			};
 			return (d.d + '.' + d.m + '.' + d.y + ' @' + d.hh + ':' + d.mm);
 		},
-
         autolinks : function(str) {
             var output = str.replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1" target="_blank">$1</a> ');
             return output;
@@ -43,11 +42,9 @@ var app = new Vue({
 	},
 
 	methods : {
-
 		getLanguages : function(index, url) {
 
 			data.repos[index].main_language = data.repos[index].language;
-
 			atomic.get(url).success(function (d, x) {
 				var res = d;
 				var repo_langs = [];
@@ -60,29 +57,42 @@ var app = new Vue({
 					}
 				}
 				data.repos[index].language = repo_langs.join(', ');
-
 			})
 			.error(function () {})
 			.always(function () {});
 		},
 
+        setReposData : function(reposData) {
+            data.repos = reposData;
+            for (var i=0; i<reposData.length; i++) {
+                data.stars += reposData[i].stargazers_count;
+                data.forks += reposData[i].forks_count;
+                data.watching += reposData[i].watchers_count;
+
+                this.getLanguages(i, reposData[i].languages_url);
+            }
+        },
 		getReposData : function() {
 
 			var self = this;
+            var cache_key = githubUser+'_repos'.toLowerCase();
+            var cache = Cache.get(cache_key);
+            if ( !!cache ) {
 
-			atomic.get(githubAPI.repos).success(function (d, x) {
-				var reposData = d;
-				data.repos = reposData;
-				for (var i=0; i<reposData.length; i++) {
-					data.stars += reposData[i].stargazers_count;
-					data.forks += reposData[i].forks_count;
-					data.watching += reposData[i].watchers_count;
+                self.setReposData(cache);
 
-					self.getLanguages(i, reposData[i].languages_url);
-				}
-			})
-			.error(function () {})
-			.always(function () {});
+            } else {
+
+                var reposData = [];
+                atomic.get(githubAPI.repos).success(function (d, x) {
+    				reposData = d;
+                    Cache.set(cache_key, reposData);
+    			})
+    			.error(function () {})
+    			.always(function () {
+                    self.setReposData(reposData);
+                });
+            }
 		},
 
         getUserData : function() {
