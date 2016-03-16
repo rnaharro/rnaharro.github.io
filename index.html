@@ -16,6 +16,9 @@
 	<meta name="format-detection" content="address=no" />
 	<meta name="google" content="notranslate" />
 	<!--[if IEMobile]><meta http-equiv="cleartype" content="on" /><![endif]-->
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" type="text/css" />
+	<link href="frontend/styles/app.css" rel="stylesheet" type="text/css" />
 </head>
 <body id="app">
 
@@ -45,7 +48,7 @@
 				{{ repo.html_url }}
 			</dt>
 			<dd>
-				<p>Description : {{ repo.description }}</p>
+				<p>Description : <span v-html="repo.description | autolinks"></span></p>
 				<p>Homepage : {{ repo.homepage }}</p>
 				<p>Languages : <strong>{{ repo.main_language }}</strong> <small>( {{ repo.language }} )</small></p>
 				<p>

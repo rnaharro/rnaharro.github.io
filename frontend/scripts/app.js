@@ -33,7 +33,12 @@ var app = new Vue({
 				mm : ("0" + _d.getUTCMinutes()).slice (-2)
 			};
 			return (d.d + '.' + d.m + '.' + d.y + ' @' + d.hh + ':' + d.mm);
-		}
+		},
+
+        autolinks : function(str) {
+            var output = str.replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1" target="_blank">$1</a> ');
+            return output;
+        }
 	},
 
 	methods : {
