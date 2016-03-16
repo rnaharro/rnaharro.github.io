@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>...</title>
+<style type="text/css">
+body {
+	width: 90%;
+	max-width: 720px;
+	margin: 0 auto;
+	font-family: sans-serif;
+}
+</style>
+</head>
+<body id="app">
+
+<header>
+	<h1>{{ user }}</h1>
+	<ul>
+		<li>Stars : {{ stars }}</li>
+		<li>Forks : {{ forks }}</li>
+		<li>Watchers : {{ watching}}</li>
+	</ul>
+
+	<h3>Languages</h3>
+	<ul>
+		<li v-for="user_lang in user_languages | orderBy true -1">
+			{{ $key }} : {{ user_lang }}
+		</li>
+	</ul>
+	<hr />
+</header>
+
+<main>
+	<h2>Repositories :</h2>
+
+	<template v-for="repo in repos">
+	<dl>
+		<dt>
+			<strong>{{ repo.name }}</strong>
+			{{ repo.html_url }}
+		</dt>
+		<dd>
+			<p>Description : {{ repo.description }}</p>
+			<p>Homepage : {{ repo.homepage }}</p>
+			<p>Languages : <strong>{{ repo.main_language }}</strong> <small>( {{ repo.language }} )</small></p>
+			<p>
+				Stars : {{ repo.stargazers_count }} &mdash;
+				Forks : {{ repo.forks_count }} &mdash;
+				Watchers : {{ repo.watchers_count }}
+			</p>
+		</dd>
+		<dd>
+			<ul>
+				<li>Pushed : {{ repo.pushed_at | filterdate }}</li>
+				<li>Updated : {{ repo.updated_at | filterdate }}</li>
+				<li>Created : {{ repo.created_at | filterdate }}</li>
+			</ul>
+		</dd>
+	</dl>
+	<hr />
+	</template>
+</main>
+
+<footer>
+	<p>{{ user }} &copy; 2016</p>
+</footer>
+
+
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.17/vue.min.js"></script>
+<script type="text/javascript">
+
+var githubUser = 'alterebro';
+var githubAPI = {
+	repos : 'https://api.github.com/users/' + githubUser + '/repos?sort=pushed',
+	user : 'https://api.github.com/users/' + githubUser
+}
+
+var data = {
+	user : githubUser,
+	repos : null,
+	user_languages : {},
+	stars : 0,
+	forks : 0,
+	watching : 0
+};
+
+var app = new Vue({
+
+	el : '#app',
+	data: data,
+
+	created: function () {
+		this.getReposData();
+	},
+
+	filters : {
+		filterdate : function(str) {
+			var _d = new Date(str);
+			var  d = {
+				d : ("0" + _d.getUTCDate()).slice (-2),
+				m : ("0" + _d.getUTCMonth()).slice (-2),
+				y : _d.getUTCFullYear(),
+				hh : ("0" + _d.getUTCHours()).slice (-2),
+				mm : ("0" + _d.getUTCMinutes()).slice (-2)
+			};
+			return (d.d + '.' + d.m + '.' + d.y + ' @' + d.hh + ':' + d.mm);
+		}
+	},
+
+	methods : {
+
+		getLanguages : function(index, url) {
+
+			data.repos[index].main_language = data.repos[index].language;
+			var self = this;
+
+			var lang_xhr = new XMLHttpRequest();
+				lang_xhr.open('GET', url);
+				lang_xhr.onload = function() {
+					var res = JSON.parse(lang_xhr.responseText);
+					var repo_langs = [];
+					for ( var i in res ) {
+						repo_langs.push(i);
+
+						if ( i in data.user_languages ) {
+							Vue.set(data.user_languages, i, (data.user_languages[i] + res[i]));
+						} else {
+							Vue.set(data.user_languages, i, res[i]);
+						}
+					}
+
+					data.repos[index].language = repo_langs.join(', ');
+				}
+				lang_xhr.send();
+
+		},
+
+		getReposData : function() {
+			var xhr = new XMLHttpRequest();
+			var self = this;
+			xhr.open('GET', githubAPI.repos);
+			xhr.onload = function() {
+				var reposData = JSON.parse(xhr.responseText);
+
+				data.repos = reposData;
+
+				for (var i=0; i<reposData.length; i++) {
+					data.stars += reposData[i].stargazers_count;
+					data.forks += reposData[i].forks_count;
+					data.watching += reposData[i].watchers_count;
+
+					self.getLanguages(i, reposData[i].languages_url);
+				}
+
+			}
+			xhr.send();
+		}
+	}
+});
+</script>
+
+</body>
+</html>
