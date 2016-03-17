@@ -5,7 +5,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>...</title>
 	<meta name="description" content="..." />
-	<meta name="keywords" content="..." />
 	<meta name="author" content="Jorge Moreno aka moro, moro.es (@alterebro)" />
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="MobileOptimized" content="320" />
@@ -18,17 +17,23 @@
 	<!--[if IEMobile]><meta http-equiv="cleartype" content="on" /><![endif]-->
 
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" type="text/css" />
 	<link href="frontend/styles/app.css" rel="stylesheet" type="text/css" />
 </head>
 <body id="app">
 
 	<header role="banner">
-		<h1 v-text="user"></h1>
+
+		<!-- <p><img v-bind:src="user_data.avatar_url" width="64" alt="{{ user }}" /></p> -->
+		<h1><a href="{{ user_data.html_url }}" title="{{ user }}" target="_blank">@{{ user }}</a>. <strong v-text="user_data.name"></strong></h1>
+		<ul class="fa-ul">
+			<li><i class="fa fa-li fa-globe"></i> {{ user_data.location }}</li>
+			<li><i class="fa fa-li fa-link"></i> {{{ user_data.blog | autolinks }}}</li>
+		</ul>
 		<p>
-			<i class="fa fa-star-o"></i> {{ stars }}
-			<i class="fa fa-code-fork"></i> {{ forks }}
-			<i class="fa fa-eye"></i> {{ watching }}
+			<i class="fa fa-fw fa-star-o"></i> {{ stars }}
+			<i class="fa fa-fw fa-code-fork"></i> {{ forks }}
+			<i class="fa fa-fw fa-eye"></i> {{ watching }}
 		</p>
 		<p>
 			<strong>Languages: </strong>
@@ -51,11 +56,11 @@
 			</article>
 			<footer>
 				<p>
-					<i class="fa fa-clock-o"></i> {{ repo.pushed_at | filterdate }}
+					<i class="fa fa-fw fa-clock-o"></i> {{ repo.pushed_at | filterdate }}
 					 &mdash;
-					<i class="fa fa-star-o"></i> {{ repo.stargazers_count }}
-					<i class="fa fa-code-fork"></i> {{ repo.forks_count }}
-					<i class="fa fa-eye"></i> {{ repo.watchers_count }}
+					<i class="fa fa-fw fa-star-o"></i> {{ repo.stargazers_count }}
+					<i class="fa fa-fw fa-code-fork"></i> {{ repo.forks_count }}
+					<i class="fa fa-fw fa-eye"></i> {{ repo.watchers_count }}
 				</p>
 			</footer>
 		</section>
