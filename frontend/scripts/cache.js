@@ -5,7 +5,7 @@
 	Cache = {
 		// Global cache expiry
 		// expiry: 1e4, // 10,000ms
-        expiry: 3.6e+6, // 1hour
+		expiry: 3.6e+6, // 1hour
 
 		// Set an item to cache
 		set: function (key, value, expiry) {

@@ -6,6 +6,7 @@ var githubAPI = {
 
 var data = {
 	user : githubUser,
+    user_data : {},
 	repos : null,
 	user_languages : {},
 	stars : 0,
@@ -19,7 +20,7 @@ var app = new Vue({
 	data: data,
 
 	created: function () {
-        // this.getUserData();
+        this.getUserData();
 		this.getReposData();
 	},
 
@@ -42,26 +43,50 @@ var app = new Vue({
 	},
 
 	methods : {
+
+        // ---------------------
+        // Get languages from each repository Endpoint
+        setLanguages : function(langData, index) {
+
+            data.repos[index].main_language = data.repos[index].language;
+
+            var res = langData;
+            var repo_langs = [];
+            for ( var i in res ) {
+                repo_langs.push(i);
+                if ( i in data.user_languages ) {
+                    Vue.set(data.user_languages, i, (data.user_languages[i] + res[i]));
+                } else {
+                    Vue.set(data.user_languages, i, res[i]);
+                }
+            }
+            data.repos[index].language = repo_langs.join(', ');
+        },
 		getLanguages : function(index, url) {
 
-			data.repos[index].main_language = data.repos[index].language;
-			atomic.get(url).success(function (d, x) {
-				var res = d;
-				var repo_langs = [];
-				for ( var i in res ) {
-					repo_langs.push(i);
-					if ( i in data.user_languages ) {
-						Vue.set(data.user_languages, i, (data.user_languages[i] + res[i]));
-					} else {
-						Vue.set(data.user_languages, i, res[i]);
-					}
-				}
-				data.repos[index].language = repo_langs.join(', ');
-			})
-			.error(function () {})
-			.always(function () {});
+            var self = this;
+            var cache_key = (githubUser+'_repo_'+index).toLowerCase();
+            var cache = Cache.get(cache_key);
+            if ( !!cache ) {
+
+                self.setLanguages(cache, index);
+
+            } else {
+
+                var langData = {};
+                atomic.get(url).success(function (d, x) {
+                    langData = d;
+                    Cache.set(cache_key, langData);
+                })
+    			.error(function () {})
+    			.always(function () {
+                    self.setLanguages(langData, index);
+                });
+            }
 		},
 
+        // ---------------------
+        // Repos Data
         setReposData : function(reposData) {
             data.repos = reposData;
             for (var i=0; i<reposData.length; i++) {
@@ -95,10 +120,32 @@ var app = new Vue({
             }
 		},
 
+        // ---------------------
+        // User Data
+        setUserData : function(userData) {
+            data.user_data = userData;
+        },
         getUserData : function() {
-            atomic.get(githubAPI.user).success(function(d, x) {
-                console.log( d );
-            });
+
+            var self = this;
+            var cache_key = githubUser+'_user'.toLowerCase();
+            var cache = Cache.get(cache_key);
+            if ( !!cache ) {
+
+                self.setUserData(cache);
+
+            } else {
+
+                var userData = {};
+                atomic.get(githubAPI.user).success(function(d, x) {
+                    userData = d;
+                    Cache.set(cache_key, userData);
+                })
+                .error(function () {})
+    			.always(function () {
+                    self.setUserData(userData);
+                });
+            }
         }
 
 	}
