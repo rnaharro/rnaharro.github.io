@@ -9,6 +9,7 @@ var data = {
     user_data : {},
 	repos : null,
 	user_languages : {},
+    user_languages_total : 0,
 	stars : 0,
 	forks : 0,
 	watching : 0
@@ -39,13 +40,17 @@ var app = new Vue({
         autolinks : function(str) {
             var output = str.replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1" target="_blank">$1</a> ');
             return output;
+        },
+        langpercent : function(val) {
+            var out = (val / this.user_languages_total)*100;
+            return out.toFixed(2);
         }
 	},
 
 	methods : {
 
         // ---------------------
-        // Get languages from each repository Endpoint
+        // Get and add languages from each repository Endpoint
         setLanguages : function(langData, index) {
 
             data.repos[index].main_language = data.repos[index].language;
@@ -61,6 +66,13 @@ var app = new Vue({
                 }
             }
             data.repos[index].language = repo_langs.join(', ');
+
+            var lang_total = 0;
+            for ( var j in data.user_languages ) {
+                lang_total += data.user_languages[j];
+            }
+            data.user_languages_total = lang_total;
+
         },
 		getLanguages : function(index, url) {
 

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html id="app">
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>...</title>
-	<meta name="description" content="..." />
+	<title v-text="user">GitHub personal user site generator</title>
+	<meta name="description" content="GitHub personal user site generator using the GitHub public API and Vue.js" />
 	<meta name="author" content="Jorge Moreno aka moro, moro.es (@alterebro)" />
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="MobileOptimized" content="320" />
@@ -20,24 +20,28 @@
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" type="text/css" />
 	<link href="frontend/styles/app.css" rel="stylesheet" type="text/css" />
 </head>
-<body id="app">
+<body>
 
 	<header role="banner">
-
-		<!-- <p><img v-bind:src="user_data.avatar_url" width="64" alt="{{ user }}" /></p> -->
-		<h1><a href="{{ user_data.html_url }}" title="{{ user }}" target="_blank">@{{ user }}</a>. <strong v-text="user_data.name"></strong></h1>
+		<figure><img v-bind:src="user_data.avatar_url" width="64" alt="{{ user }}" /></figure>
+		<h1>
+			<a href="{{ user_data.html_url }}" title="{{ user }}" target="_blank">@{{ user }}</a>.
+			<strong v-text="user_data.name"></strong>
+		</h1>
 		<ul class="fa-ul">
 			<li><i class="fa fa-li fa-globe"></i> {{ user_data.location }}</li>
 			<li><i class="fa fa-li fa-link"></i> {{{ user_data.blog | autolinks }}}</li>
 		</ul>
 		<p>
+			<i class="fa fa-fw fa-code"></i>
+			<span v-for="user_lang in user_languages | orderBy 'user_lang' -1" class="code-lang">
+				<strong>{{ $key }}</strong> {{ user_lang | langpercent }}%
+			</span>
+		</p>
+		<p>
 			<i class="fa fa-fw fa-star-o"></i> {{ stars }}
 			<i class="fa fa-fw fa-code-fork"></i> {{ forks }}
 			<i class="fa fa-fw fa-eye"></i> {{ watching }}
-		</p>
-		<p>
-			<strong>Languages: </strong>
-			<template v-for="user_lang in user_languages"><span>{{ $key }} ( <small>{{ user_lang }}</small> ) </span></template>
 		</p>
 		<hr />
 	</header>

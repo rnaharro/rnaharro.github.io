@@ -40,12 +40,28 @@ hr {
 
 
 header[role="banner"] {
+    padding: 0 150px 40px 0;
+    margin: 0 0 40px 0;
+    border-bottom: dotted #999 1px;
+    position: relative;
+
+    figure {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 0;
+        margin: 0;
+
+        img {
+            display: block;
+            width: 128px;
+        }
+    }
     h1 {
         font-weight: 600;
         font-size: 36px;
         margin: 0;
         padding: 0;
-
         strong {
             font-weight: 200;
         }
@@ -54,15 +70,17 @@ header[role="banner"] {
         margin: 0;
         font-size: 80%;
         color: #999;
+
+        span.code-lang {
+            display: inline-block;
+            padding: 0 5px 0 0;
+        }
     }
     ul {
         margin: 0 0 10px 30px;
         padding: 0;
     }
 
-    padding: 0 0 40px 0;
-    margin: 0 0 40px 0;
-    border-bottom: dotted #999 1px;
 }
 
 footer[role="contentinfo"] {
@@ -80,7 +98,6 @@ main {
     }
 
     section {
-//        border: solid #999 1px;
         width: 50%;
         float: left;
         clear: none;
