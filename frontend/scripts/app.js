@@ -100,6 +100,11 @@ var app = new Vue({
         // ---------------------
         // Repos Data
         setReposData : function(reposData) {
+
+            if (reposData.length == 0) {
+                console.log('error');
+            }
+
             data.repos = reposData;
             for (var i=0; i<reposData.length; i++) {
                 data.stars += reposData[i].stargazers_count;

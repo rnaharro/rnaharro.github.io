@@ -23,14 +23,14 @@
 <body>
 
 	<header role="banner">
-		<figure><img v-bind:src="user_data.avatar_url" width="64" alt="{{ user }}" /></figure>
+		<figure v-if="user_data.avatar_url"><img :src="user_data.avatar_url" width="32" alt="{{ user }}" /></figure>
 		<h1>
-			<a href="{{ user_data.html_url }}" title="{{ user }}" target="_blank">@{{ user }}</a>.
+			<a href="{{ user_data.html_url }}" title="{{ user }}" target="_blank">@{{ user }}</a>
 			<strong v-text="user_data.name"></strong>
 		</h1>
 		<ul class="fa-ul">
-			<li><i class="fa fa-li fa-globe"></i> {{ user_data.location }}</li>
-			<li><i class="fa fa-li fa-link"></i> {{{ user_data.blog | autolinks }}}</li>
+			<li v-if="user_data.location"><i class="fa fa-li fa-globe"></i> {{ user_data.location }}</li>
+			<li v-if="user_data.blog"><i class="fa fa-li fa-link"></i> {{{ user_data.blog | autolinks }}}</li>
 		</ul>
 		<p>
 			<i class="fa fa-fw fa-code"></i>
@@ -60,8 +60,7 @@
 			</article>
 			<footer>
 				<p>
-					<i class="fa fa-fw fa-clock-o"></i> {{ repo.pushed_at | filterdate }}
-					 &mdash;
+					<i class="fa fa-fw fa-clock-o"></i> {{ repo.pushed_at | filterdate }} &mdash;
 					<i class="fa fa-fw fa-star-o"></i> {{ repo.stargazers_count }}
 					<i class="fa fa-fw fa-code-fork"></i> {{ repo.forks_count }}
 					<i class="fa fa-fw fa-eye"></i> {{ repo.watchers_count }}
