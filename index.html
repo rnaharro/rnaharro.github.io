@@ -19,7 +19,7 @@
 	<meta name="mobile-web-app-capable" content="yes" />
 	<meta name="theme-color" content="#3f434f" />
 	<meta name="msapplication-navbutton-color" content="#3f434f" />
-	<meta name="msapplication-TileImage" content="icon.png" />
+	<meta name="msapplication-TileImage" content="{{ user_data.avatar_url }}" />
 	<meta name="msapplication-TileColor" content="#3f434f" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -39,7 +39,7 @@
 		<ul class="fa-ul">
 			<li>
 				<i class="fa fa-fw fa-code"></i>
-				<span v-for="user_lang in user_languages | orderBy 'user_lang' -1" class="code-lang">
+				<span v-for="user_lang in user_languages | orderBy 'user_lang' -1" class="code-lang" v-if="user_lang / user_languages_total * 100 > 0.1">
 					<strong>{{ $key }}</strong> {{ user_lang | langpercent }}%
 				</span>
 			</li>

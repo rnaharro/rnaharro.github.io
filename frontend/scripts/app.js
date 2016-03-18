@@ -43,7 +43,7 @@ var app = new Vue({
         },
         langpercent : function(val) {
             var out = (val / this.user_languages_total)*100;
-            return out.toFixed(2);
+            return out.toFixed(1);
         }
 	},
 
