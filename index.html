@@ -23,51 +23,48 @@
 <body>
 
 	<header role="banner">
-		<figure v-if="user_data.avatar_url"><img :src="user_data.avatar_url" width="32" alt="{{ user }}" /></figure>
-		<h1>
-			<a href="{{ user_data.html_url }}" title="{{ user }}" target="_blank">@{{ user }}</a>
-			<strong v-text="user_data.name"></strong>
-		</h1>
+		<h1><strong><a href="{{ user_data.html_url }}" title="{{ user }}" target="_blank">@{{ user }}</a></strong>. {{ user_data.name }}</h1>
 		<ul class="fa-ul">
-			<li v-if="user_data.location"><i class="fa fa-li fa-globe"></i> {{ user_data.location }}</li>
-			<li v-if="user_data.blog"><i class="fa fa-li fa-link"></i> {{{ user_data.blog | autolinks }}}</li>
+			<li>
+				<i class="fa fa-fw fa-code"></i>
+				<span v-for="user_lang in user_languages | orderBy 'user_lang' -1" class="code-lang">
+					<strong>{{ $key }}</strong> {{ user_lang | langpercent }}%
+				</span>
+			</li>
+			<li v-if="user_data.location"><i class="fa fa-fw fa-globe"></i> {{ user_data.location }}</li>
+			<li v-if="user_data.blog"><i class="fa fa-fw fa-link"></i> {{{ user_data.blog | autolinks }}}</li>
 		</ul>
-		<p>
-			<i class="fa fa-fw fa-code"></i>
-			<span v-for="user_lang in user_languages | orderBy 'user_lang' -1" class="code-lang">
-				<strong>{{ $key }}</strong> {{ user_lang | langpercent }}%
-			</span>
-		</p>
-		<p>
-			<i class="fa fa-fw fa-star-o"></i> {{ stars }}
-			<i class="fa fa-fw fa-code-fork"></i> {{ forks }}
-			<i class="fa fa-fw fa-eye"></i> {{ watching }}
-		</p>
+		<div id="header-aside">
+			<figure v-if="user_data.avatar_url"><img :src="user_data.avatar_url" width="32" alt="{{ user }}" /></figure>
+			<ul class="fa-ul">
+				<li><i class="fa fa-fw fa-star-o"></i> {{ stars }}</li>
+				<li><i class="fa fa-fw fa-code-fork"></i> {{ forks }}</li>
+				<li><i class="fa fa-fw fa-eye"></i> {{ watching }}</li>
+			</ul>
+		</div>
 		<hr />
 	</header>
 
 	<main role="main">
-		<h2>Repositories :</h2>
-
 		<section v-for="repo in repos">
 			<header>
-				<h3><a href="{{ repo.html_url }}" title="{{ repo.name }}" target="_blank">{{ repo.name }} <i class="fa fa-external-link"></i></a></h3>
-				<p v-text="repo.language"></p>
-			</header>
-			<article>
-				<p v-if="repo.description"><i class="fa fa-fw fa-align-left"></i> {{{ repo.description | autolinks }}}</p><p v-else><i class="fa fa-fw fa-align-left"></i> {{ repo.name }}</p>
-				<p v-if="repo.homepage"><i class="fa fa-fw fa-globe"></i> {{{ repo.homepage | autolinks }}}</p>
-			</article>
-			<footer>
-				<p>
+				<h3><a href="{{ repo.html_url }}" title="{{ repo.name }}" target="_blank">{{ repo.name }}</a></h3>
+				<p class="repo-langs" v-text="repo.language"></p>
+				<p class="repo-details">
 					<i class="fa fa-fw fa-clock-o"></i> {{ repo.pushed_at | filterdate }} &mdash;
 					<i class="fa fa-fw fa-star-o"></i> {{ repo.stargazers_count }}
 					<i class="fa fa-fw fa-code-fork"></i> {{ repo.forks_count }}
 					<i class="fa fa-fw fa-eye"></i> {{ repo.watchers_count }}
 				</p>
+			</header>
+			<article>
+				<p v-if="repo.description">{{{ repo.description | autolinks }}}</p>
+				<p v-else>{{ repo.name }}</p>
+			</article>
+			<footer>
+				<p v-if="repo.homepage"><i class="fa fa-fw fa-link"></i> {{{ repo.homepage | autolinks }}}</p>
 			</footer>
 		</section>
-
 	</main>
 
 	<footer role="contentinfo">
