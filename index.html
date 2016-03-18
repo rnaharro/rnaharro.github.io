@@ -49,7 +49,9 @@
 		<section v-for="repo in repos">
 			<header>
 				<h3><a href="{{ repo.html_url }}" title="{{ repo.name }}" target="_blank">{{ repo.name }}</a></h3>
-				<p class="repo-langs" v-text="repo.language"></p>
+				<p class="repo-langs">
+					<i class="fa fa-fw fa-code"></i> {{ repo.language }}
+				</p>
 				<p class="repo-details">
 					<i class="fa fa-fw fa-clock-o"></i> {{ repo.pushed_at | filterdate }} &mdash;
 					<i class="fa fa-fw fa-star-o"></i> {{ repo.stargazers_count }}
