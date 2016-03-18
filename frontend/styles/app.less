@@ -76,16 +76,8 @@ h3 {
     font-weight: 600;
 }
 
-header[role="banner"]:after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-
-    background-color: @color-primary;
+.bg-gradient (@bg : @color-primary) {
+    background-color: @bg;
     background-image: -moz-linear-gradient(left, #e5e5be 0%, #29bbb9 50%, #3f434f 100%);
     background-image: -webkit-gradient(left top, right top, color-stop(0%, #e5e5be), color-stop(50%, #29bbb9), color-stop(100%, #3f434f));
     background-image: -webkit-linear-gradient(left, #e5e5be 0%, #29bbb9 50%, #3f434f 100%);
@@ -95,10 +87,24 @@ header[role="banner"]:after {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5be', endColorstr='#3f434f', GradientType=1 );
 }
 
+header[role="banner"]:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    .bg-gradient();
+}
+
 header[role="banner"] {
+    position: relative;
+    z-index: 1;
+
     background: #fff;
     color: @color-dark;
-    box-shadow: 0 3px 2px rgba(0, 0, 0, .2);
+    box-shadow: 0 3px 2px rgba(0, 0, 0, .25);
     margin: 0;
     padding: @global-margin (@global-margin + 64px) @global-margin @global-margin;
 
@@ -146,22 +152,19 @@ header[role="banner"] {
     }
 }
 
-footer[role="contentinfo"] {
-    background: #fff;
-    color: @color-dark;
-    padding: @global-margin;
-    clear: both;
-    box-shadow:
-        inset 0 1px 0 rgba(0, 0, 0, .1),
-        inset 0 3px 1px rgba(0, 0, 0, .1)
-    ;
-}
-
 main {
+    position: relative;
+    z-index: 0;
 
     max-width: 1400px;
     background: darken(@color-dark, 5%);
-    overflow: auto;
+
+    // overflow: auto;
+    zoom: 1;
+    &:before, &:after{ content:""; display:table; }
+    &:after{ clear: both; }
+
+    a:hover { color: #fff; }
 
     section {
         background-color: @color-dark;
@@ -169,8 +172,9 @@ main {
         top: 0;
 
             // default: mobile (device-s)
-            width: 100%;
-            height: auto;
+                width: 100%;
+                height: auto;
+
             @media @device-s {
                 width: 50%;
                 height: 360px;
@@ -187,29 +191,33 @@ main {
         padding: @global-margin;
         overflow: hidden;
         display: block;
-        position: relative;
         float: left;
         box-shadow: inset -1px -1px 0 0 rgba(0, 0, 0, .15);
         text-shadow: 0 -1px 0 rgba(0, 0, 0, .85);
 
+        position: relative;
+        top: 0;
+        z-index: 9;
+
         &:hover {
-            // background: rgba(0, 0, 0, .25);
             background: darken(@color-dark, 10%);
             box-shadow:
-                0 -5px 0 0 @color-primary,
+                0 -4px 0 0 @color-primary,
+                inset 0 1px 0 0 #000,
                 0px 10px 30px 0px rgba(0, 0, 0, .5)
             ;
-            // border-top: solid @color-primary 5px;
 
-            z-index: 1;
             top: 5px;
+            z-index: 10;
         }
 
-        a:hover { color: #fff; }
 
 
         header {
-            p { font-size: 80%; }
+            p {
+                font-size: 75%;
+                color: darken(@color-light, 20%);
+            }
             p.repo-langs {
                 color: #fff;
                 text-transform: uppercase;
@@ -230,4 +238,30 @@ main {
             }
         }
     }
+}
+
+footer[role="contentinfo"] {
+    position: relative;
+    z-index: -1;
+
+    background: #fff;
+    color: @color-dark;
+    padding: @global-margin;
+    clear: both;
+}
+footer[role="contentinfo"]:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    .bg-gradient();
+    box-shadow:
+        inset 0 1px 0 rgba(0, 0, 0, .75),
+        0 1px 0 rgba(255, 255, 255, .75),
+        0 2px 0 rgba(0, 0, 0, .05),
+        0 4px 1px rgba(0, 0, 0, .05)
+    ;
 }
