@@ -33,6 +33,7 @@ var app = new Vue({
 	created: function () {
         this.getUserData();
 		this.getReposData();
+        this.socialLinks();
 	},
 
 	filters : {
@@ -54,6 +55,9 @@ var app = new Vue({
         langpercent : function(val) {
             var out = (val / this.user_languages_total)*100;
             return out.toFixed(1);
+        },
+        urlencode : function(str) {
+            return encodeURIComponent(str);
         }
 	},
 
@@ -172,6 +176,20 @@ var app = new Vue({
     			.always(function () {
                     self.setUserData(userData);
                 });
+            }
+        },
+
+        // ---------------------
+        // Social Networks Links
+        socialLinks : function() {
+
+            var social_links = document.querySelectorAll('ul.social-share li a');
+            for (var i=0; i<social_links.length; i++) {
+                social_links[i].onclick = function(e) {
+                    e.preventDefault();
+                    var network_window = window.open( this.href, this.innerHTML.toLowerCase(), 'height=350,width=600');
+                	network_window.focus();
+                }
             }
         }
 
