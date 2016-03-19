@@ -14,9 +14,6 @@
     <meta name="robots" content="index, follow" />
 
 	<!-- Social Networks -->
-	<meta name="twitter:title" property="og:title" itemprop="title name" v-bind:content="metadata.title" />
-	<meta name="twitter:description" property="og:description" itemprop="description" v-bind:content="metadata.description" />
-	<meta name="twitter:url" property="og:url" itemprop="url" v-bind:content="metadata.url" />
 	<meta name="twitter:image" property="og:image" itemprop="image" content="http://alterebro.github.io/frontend/images/alterebro-github-io.jpg" />
 	<!-- : FaceBook -->
 	<meta property="og:type" content="website" />
@@ -111,7 +108,7 @@
 			<dd>
 				<ul class="social-share">
 					<li><i class="fa fa-facebook"></i> <a href="http://www.facebook.com/sharer.php?u={{ metadata.url | urlencode }}&t={{ metadata.title | urlencode }}" title="Share on Facebook">FaceBook</a></li>
-					<li><i class="fa fa-twitter"></i> <a href="http://twitter.com/share?text={{ metadata.title | urlencode }}&url={{ metadata.url | urlencode }}" title="Share on Twitter">Twitter</a></li>
+					<li><i class="fa fa-twitter"></i> <a href="http://twitter.com/share?text={{ metadata.title | urlencode }}&url={{ metadata.url | urlencode }}&via=alterebro" title="Share on Twitter">Twitter</a></li>
 					<li><i class="fa fa-google-plus"></i> <a href="https://plusone.google.com/_/+1/confirm?hl=en&url={{ metadata.url | urlencode }}" title="Share on GooglePlus">GooglePlus</a></li>
 					<li><i class="fa fa-linkedin"></i> <a href="http://www.linkedin.com/shareArticle?mini=true&url={{ metadata.url | urlencode }}&title={{ metadata.title | urlencode }}&summary={{ metadata.description | urlencode }}" title="Share on LinkedIn">LinkedIn</a></li>
 				</ul>
