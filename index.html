@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title v-text="metadata.title">GitHub Personal User Site Generator : alterebro.github.io</title>
-	<meta name="description" v-bind:content="metadata.description" />
+	<meta name="description" content="GitHub personal user site generator using the GitHub public API and Vue.js : alterebro.github.io" v-bind:content="metadata.description" />
 	<meta name="author" content="Jorge Moreno aka moro, moro.es (@alterebro)" />
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="MobileOptimized" content="320" />
@@ -14,6 +14,9 @@
     <meta name="robots" content="index, follow" />
 
 	<!-- Social Networks -->
+	<meta name="twitter:title" property="og:title" itemprop="title name" content="GitHub Personal User Site Generator" v-bind:content="metadata.title" />
+	<meta name="twitter:description" property="og:description" itemprop="description" content="GitHub personal user site generator using the GitHub public API and Vue.js : alterebro.github.io" v-bind:content="metadata.description" />
+	<meta name="twitter:url" property="og:url" itemprop="url" content="http://alterebro.github.io" v-bind:content="metadata.url" />
 	<meta name="twitter:image" property="og:image" itemprop="image" content="http://alterebro.github.io/frontend/images/alterebro-github-io.jpg" />
 	<!-- : FaceBook -->
 	<meta property="og:type" content="website" />
