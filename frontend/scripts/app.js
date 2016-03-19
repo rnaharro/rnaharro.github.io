@@ -1,11 +1,21 @@
-var githubUser = 'alterebro';
+
+var settings = {
+    github_user : 'alterebro',
+    metadata : {
+        title : 'GitHub personal user site generator',
+        description : 'GitHub personal user site generator using the GitHub public API and Vue.js : alterebro.github.io',
+        url : 'http://alterebro.github.io'
+    }
+}
+
 var githubAPI = {
-	repos : 'https://api.github.com/users/' + githubUser + '/repos?sort=pushed',
-	user : 'https://api.github.com/users/' + githubUser
+	repos : 'https://api.github.com/users/' + settings.github_user + '/repos?sort=pushed',
+	user : 'https://api.github.com/users/' + settings.github_user
 }
 
 var data = {
-	user : githubUser,
+	user : settings.github_user,
+    metadata : settings.metadata,
     user_data : {},
 	repos : null,
 	user_languages : {},
@@ -77,7 +87,7 @@ var app = new Vue({
 		getLanguages : function(index, url) {
 
             var self = this;
-            var cache_key = (githubUser+'_repo_'+index).toLowerCase();
+            var cache_key = (settings.github_user+'_repo_'+index).toLowerCase();
             var cache = Cache.get(cache_key);
             if ( !!cache ) {
 
@@ -117,7 +127,7 @@ var app = new Vue({
 		getReposData : function() {
 
 			var self = this;
-            var cache_key = githubUser+'_repos'.toLowerCase();
+            var cache_key = settings.github_user+'_repos'.toLowerCase();
             var cache = Cache.get(cache_key);
             if ( !!cache ) {
 
@@ -145,7 +155,7 @@ var app = new Vue({
         getUserData : function() {
 
             var self = this;
-            var cache_key = githubUser+'_user'.toLowerCase();
+            var cache_key = settings.github_user+'_user'.toLowerCase();
             var cache = Cache.get(cache_key);
             if ( !!cache ) {
 
