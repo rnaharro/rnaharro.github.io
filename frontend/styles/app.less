@@ -6,6 +6,7 @@
 @global-margin : 40px;
 
 // Media
+@device-xs : ~"all and (min-width: 420px)";
 @device-s : ~"all and (min-width: 640px)";
 @device-m : ~"all and (min-width: 900px)";
 @device-l : ~"all and (min-width: 1200px)";
@@ -104,6 +105,11 @@ header[role="banner"] {
     h1 {
         line-height: 42px;
         min-height: 42px;
+
+        strong {
+            display: block;
+            @media @device-xs { display: inline; }
+        }
     }
     ul {
         clear: both;
@@ -140,6 +146,9 @@ header[role="banner"] {
                 display: block;
                 float: right;
                 width: 32px;
+                height: 32px;
+                border: none;
+                overflow: hidden;
                 margin: 5px 0 0 0;
                 border-radius: 16px;
                 -webkit-filter: grayscale(50%);
@@ -274,6 +283,7 @@ footer[role="contentinfo"] {
                 display: block;
                 float: left;
                 padding: 0 10px 0 0;
+                font-weight: 600;
 
                 i { color: @color-primary; }
                 a:hover { border-bottom: solid @color-dark 1px; }
