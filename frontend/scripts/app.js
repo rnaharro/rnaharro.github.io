@@ -22,7 +22,10 @@ var data = {
     user_languages_total : 0,
 	stars : 0,
 	forks : 0,
-	watching : 0
+	watching : 0,
+
+    user_found : null,
+    repos_found : null
 };
 
 var app = new Vue({
@@ -115,10 +118,7 @@ var app = new Vue({
         // Repos Data
         setReposData : function(reposData) {
 
-            if (reposData.length == 0) {
-                console.log('error');
-            }
-
+            data.repos_found = (reposData.length > 0);
             data.repos = reposData;
             for (var i=0; i<reposData.length; i++) {
                 data.stars += reposData[i].stargazers_count;
@@ -154,6 +154,7 @@ var app = new Vue({
         // ---------------------
         // User Data
         setUserData : function(userData) {
+            data.user_found = (!!userData.id)
             data.user_data = userData;
         },
         getUserData : function() {
@@ -195,3 +196,9 @@ var app = new Vue({
 
 	}
 });
+
+window.onload = function() {
+    window.setTimeout(function() {
+        document.querySelector('body').classList.remove('preload');
+    }, 500);
+}

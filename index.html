@@ -52,7 +52,19 @@
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" type="text/css" />
 	<link href="frontend/styles/app.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body class="preload">
+
+	<div id="loader" v-bind:class=" user_found && repos_found ? 'closed' : '' ">
+		<div class="loading-content">
+			<div class="loading-spinner" v-bind:class=" !user_found && !repos_found ? 'hidden' : '' "></div>
+			<div class="loading-message"></div>
+			<div class="loading-error" v-if="!user_found && !repos_found">
+				<i class="fa fa-warning fa-2x"></i>
+				<br /><strong v-text="'Error fetching user data'"></strong>
+				<br /><a :href="'https://github.com/' + user" v-text="'https://github.com/' + user"></a>
+			</div>
+		</div>
+	</div>
 
 	<header role="banner">
 		<h1><strong><a href="{{ user_data.html_url }}" title="{{ user }}" target="_blank">@{{ user }}</a></strong> {{ user_data.name }}</h1>
