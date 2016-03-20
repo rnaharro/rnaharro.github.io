@@ -7,6 +7,7 @@ var settings = {
         url : 'http://alterebro.github.io'
     }
 }
+settings.github_user = location.search.slice(1) || settings.github_user;
 
 var githubAPI = {
 	repos : 'https://api.github.com/users/' + settings.github_user + '/repos?sort=pushed',
