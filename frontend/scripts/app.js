@@ -23,9 +23,8 @@ var data = {
 	stars : 0,
 	forks : 0,
 	watching : 0,
-
-    user_found : null,
-    repos_found : null
+    status : 'listen', // listen | ready | error
+    error_msg : ''
 };
 
 var app = new Vue({
@@ -118,15 +117,25 @@ var app = new Vue({
         // Repos Data
         setReposData : function(reposData) {
 
-            data.repos_found = (reposData.length > 0);
-            data.repos = reposData;
-            for (var i=0; i<reposData.length; i++) {
-                data.stars += reposData[i].stargazers_count;
-                data.forks += reposData[i].forks_count;
-                data.watching += reposData[i].watchers_count;
+            if (reposData.length > 0) {
+                data.repos = reposData;
+                for (var i=0; i<reposData.length; i++) {
+                    data.stars += reposData[i].stargazers_count;
+                    data.forks += reposData[i].forks_count;
+                    data.watching += reposData[i].watchers_count;
 
-                this.getLanguages(i, reposData[i].languages_url);
+                    this.getLanguages(i, reposData[i].languages_url);
+                }
+
+                window.setTimeout(function() {
+                    document.querySelector('body').classList.remove('preload');
+                    data.status = 'ready'; }, 1000);
+
+            } else {
+                data.status = 'error';
             }
+
+
         },
 		getReposData : function() {
 
@@ -154,7 +163,6 @@ var app = new Vue({
         // ---------------------
         // User Data
         setUserData : function(userData) {
-            data.user_found = (!!userData.id)
             data.user_data = userData;
         },
         getUserData : function() {
@@ -173,7 +181,9 @@ var app = new Vue({
                     userData = d;
                     Cache.set(cache_key, userData);
                 })
-                .error(function () {})
+                .error(function (e) {
+                    self.error_msg = e.message;
+                })
     			.always(function () {
                     self.setUserData(userData);
                 });
@@ -196,9 +206,3 @@ var app = new Vue({
 
 	}
 });
-
-window.onload = function() {
-    window.setTimeout(function() {
-        document.querySelector('body').classList.remove('preload');
-    }, 500);
-}

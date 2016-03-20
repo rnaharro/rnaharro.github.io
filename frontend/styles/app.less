@@ -319,26 +319,24 @@ footer[role="contentinfo"]:before {
 
 
 @-ms-keyframes spin {
-    from { -ms-transform: rotate(0deg); }
-    to { -ms-transform: rotate(360deg); }
+    from { -ms-transform: rotate( 0deg ); }
+    to { -ms-transform: rotate( 360deg ); }
 }
 @-moz-keyframes spin {
-    from { -moz-transform: rotate(0deg); }
-    to { -moz-transform: rotate(360deg); }
+    from { -moz-transform: rotate( 0deg ); }
+    to { -moz-transform: rotate( 360deg ); }
 }
 @-webkit-keyframes spin {
-    from { -webkit-transform: rotate(0deg); }
-    to { -webkit-transform: rotate(360deg); }
+    from { -webkit-transform: rotate( 0deg ); }
+    to { -webkit-transform: rotate( 360deg ); }
 }
 @keyframes spin {
-    from { transform:rotate(0deg); }
-    to { transform:rotate(360deg); }
+    from { transform:rotate( 0deg ); }
+    to { transform:rotate( 360deg ); }
 }
-
-
 #loader {
     position: fixed;
-    z-index: 20;
+    z-index: 100;
     display: block;
     top: 0;
     left: 0;
@@ -346,8 +344,6 @@ footer[role="contentinfo"]:before {
     height: 100%;
     background: #fff;
     color: @color-dark;
-
-    &.closed { display: none; }
 
     .loading-content {
         position: relative;
@@ -359,11 +355,11 @@ footer[role="contentinfo"]:before {
         text-align: center;
     }
     .loading-error {
-        padding: 10px 0;
-    }
-    .loading-message {
         display: none;
         padding: 10px 0;
+        width: 90%;
+        max-width: 280px;
+        margin: 0 auto;
     }
     .loading-spinner {
         position: relative;
@@ -377,10 +373,10 @@ footer[role="contentinfo"]:before {
             0 0 0 1px #fff,
             0 0 2px 3px rgba(0, 0, 0, .1)
         ;
-        -webkit-animation: spin 1s infinite linear;
-        -moz-animation:    spin 1s infinite linear;
-        -o-animation:      spin 1s infinite linear;
-        animation:         spin 1s infinite linear;
+        -webkit-animation: spin .8s infinite linear;
+        -moz-animation:    spin .8s infinite linear;
+        -o-animation:      spin .8s infinite linear;
+        animation:         spin .8s infinite linear;
 
         &:after {
             content: '';
@@ -398,8 +394,31 @@ footer[role="contentinfo"]:before {
             ;
         }
     }
+
+    -webkit-transition:
+        top .3s linear .3s,
+        opacity .3s linear !important
+    ;
+    transition:
+        top .3s linear .3s,
+        opacity .3s linear !important
+    ;
+    &.listen {
+        .loading-spinner { display: block; }
+        .loading-error { display: none; }
+    }
+    &.ready {
+        .loading-error { display: none; }
+        .loading-spinner { display: none; }
+        opacity: 0;
+        top: 100%;
+    }
+    &.error {
+        .loading-spinner { display: none; }
+        .loading-error { display: block; }
+    }
+
 }
 
-.hidden {
-    display: none !important;
-}
+.hidden { display: none !important; }
+.visible { display: block !important; }

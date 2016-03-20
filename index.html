@@ -54,14 +54,14 @@
 </head>
 <body class="preload">
 
-	<div id="loader" v-bind:class=" user_found && repos_found ? 'closed' : '' ">
+	<div id="loader" class="listen" v-bind:class="status">
 		<div class="loading-content">
-			<div class="loading-spinner" v-bind:class=" !user_found && !repos_found ? 'hidden' : '' "></div>
-			<div class="loading-message"></div>
-			<div class="loading-error" v-if="!user_found && !repos_found">
+			<div class="loading-spinner"></div>
+			<div class="loading-error">
 				<i class="fa fa-warning fa-2x"></i>
 				<br /><strong v-text="'Error fetching user data'"></strong>
 				<br /><a :href="'https://github.com/' + user" v-text="'https://github.com/' + user"></a>
+				<br /><span v-text="error_msg"></span>
 			</div>
 		</div>
 	</div>
