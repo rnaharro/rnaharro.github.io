@@ -6,8 +6,8 @@
 var settings = {
     github_user : 'alterebro', // GitHub username
     metadata : {
-        title : 'GitHub personal user site generator',
-        description : 'GitHub personal user site generator using the GitHub public API and Vue.js : alterebro.github.io',
+        title : 'GUPG. Github User Page Generator',
+        description : 'Github User Page JavaCript Generator built with Vue.js that creates a dynamic page based on the existing data and repositories of a given GitHub user',
         url : 'http://alterebro.github.io' // URL where it's going to be published
     }
 }
