@@ -305,6 +305,23 @@ footer[role="contentinfo"] {
         }
     }
 
+    p#footer-credits {
+        font-size: 85%;
+        padding: 20px 0;
+        margin: 20px 0 0 0;
+        border-top: dotted lighten(@color-dark, 40%) 1px;
+
+        @media @device-s {
+            padding: 0;
+            margin: 0;
+            text-align: right;
+            border-top: none;
+            position: absolute;
+            top: @global-margin;
+            right: @global-margin;
+        }
+    }
+
 }
 footer[role="contentinfo"]:before {
     content: '';
