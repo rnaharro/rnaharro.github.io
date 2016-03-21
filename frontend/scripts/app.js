@@ -1,12 +1,18 @@
-
+/* GUPG : Github User Page Generator
+ * (c) 2016 Jorge Moreno @alterebro (www.moro.es)
+ * https://github.com/alterebro/alterebro.github.io
+ * MIT License
+*/
 var settings = {
-    github_user : 'alterebro',
+    github_user : 'alterebro', // GitHub username
     metadata : {
         title : 'GitHub personal user site generator',
         description : 'GitHub personal user site generator using the GitHub public API and Vue.js : alterebro.github.io',
-        url : 'http://alterebro.github.io'
+        url : 'http://alterebro.github.io' // URL where it's going to be published
     }
 }
+
+// Replace the github user from the url querystring : ?username
 settings.github_user = location.search.slice(1) || settings.github_user;
 
 var githubAPI = {
@@ -52,8 +58,10 @@ var app = new Vue({
 			return (d.d + '.' + d.m + '.' + d.y + ' @' + d.hh + ':' + d.mm);
 		},
         autolinks : function(str) {
-            var output = str.replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1" target="_blank">$1</a> ');
-            return output;
+            if (!!str) {
+                var output = str.replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1" target="_blank">$1</a> ');
+                return output;
+            }
         },
         langpercent : function(val) {
             var out = (val / this.user_languages_total)*100;

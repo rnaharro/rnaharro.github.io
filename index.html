@@ -75,8 +75,12 @@
 					<strong>{{ $key }}</strong> {{ user_lang | langpercent }}%
 				</span>
 			</li>
+
 			<li v-if="user_data.location"><i class="fa fa-fw fa-globe"></i> {{ user_data.location }}</li>
+			<li v-else><i class="fa fa-fw fa-globe"></i> The Internet</li>
+
 			<li v-if="user_data.blog"><i class="fa fa-fw fa-link"></i> {{{ user_data.blog | autolinks }}}</li>
+			<li v-else><i class="fa fa-fw fa-link"></i> {{{ user_data.html_url | autolinks }}}</li>
 		</ul>
 		<div id="header-aside">
 			<figure v-if="user_data.avatar_url"><img :src="user_data.avatar_url" width="32" alt="{{ user }}" /></figure>
@@ -93,7 +97,9 @@
 		<section v-for="repo in repos">
 			<header>
 				<h3><i class="fa fa-github"></i> <a href="{{ repo.html_url }}" title="{{ repo.name }}" target="_blank">{{ repo.name }}</a></h3>
-				<p class="repo-langs"><i class="fa fa-fw fa-code"></i> {{ repo.language }}</p>
+				<p class="repo-langs" v-if="repo.language">
+					<i class="fa fa-fw fa-code"></i> {{ repo.language }}
+				</p>
 				<p class="repo-details">
 					<i class="fa fa-fw fa-clock-o"></i> {{ repo.pushed_at | filterdate }} &mdash;
 					<i class="fa fa-fw fa-star-o"></i> {{ repo.stargazers_count }}
