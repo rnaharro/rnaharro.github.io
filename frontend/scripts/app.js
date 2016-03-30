@@ -8,7 +8,7 @@ var settings = {
     metadata : {
         title : 'Github User Page Generator : alterebro.github.io',
         description : 'Github User Page JavaCript Generator built with Vue.js that creates a dynamic page based on the existing data and repositories of a given GitHub user',
-        url : 'http://alterebro.github.io' // URL where it's going to be published
+        url : 'http://rnaharro.github.io' // URL where it's going to be published
     }
 }
 
