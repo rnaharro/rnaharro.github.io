@@ -4,7 +4,7 @@
  * MIT License
 */
 var settings = {
-    github_user : 'alterebro', // GitHub username
+    github_user : 'rnaharro', // GitHub username
     metadata : {
         title : 'Github User Page Generator : alterebro.github.io',
         description : 'Github User Page JavaCript Generator built with Vue.js that creates a dynamic page based on the existing data and repositories of a given GitHub user',
