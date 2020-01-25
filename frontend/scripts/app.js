@@ -1,12 +1,12 @@
 /* GUPG : Github User Page Generator
  * (c) 2016 Jorge Moreno @alterebro (www.moro.es)
- * https://github.com/alterebro/alterebro.github.io
+ * https://github.com/rnaharro/rnaharro.github.io
  * MIT License
 */
 var settings = {
     github_user : 'rnaharro', // GitHub username
     metadata : {
-        title : 'Github User Page Generator : alterebro.github.io',
+        title : 'Github User Page Generator : rnaharro.github.io',
         description : 'Github User Page JavaCript Generator built with Vue.js that creates a dynamic page based on the existing data and repositories of a given GitHub user',
         url : 'http://rnaharro.github.io' // URL where it's going to be published
     }
