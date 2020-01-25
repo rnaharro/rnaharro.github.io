@@ -1,5 +1,5 @@
 /* GUPG : Github User Page Generator
- * (c) 2016 Jorge Moreno @alterebro (www.moro.es)
+ * (c) 2020 Jorge Moreno @alterebro (www.moro.es)
  * https://github.com/rnaharro/rnaharro.github.io
  * MIT License
 */

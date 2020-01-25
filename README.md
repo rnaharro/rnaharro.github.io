@@ -43,7 +43,7 @@ For example, in order to see the **octocat** user generated page, the URL will b
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Jorge Moreno ([@alterebro](https://twitter.com/alterebro))
+Copyright (c) 2020 Jorge Moreno ([@alterebro](https://twitter.com/alterebro))
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
